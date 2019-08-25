@@ -1,3 +1,14 @@
+# about this forked repository
+
+```go
+s := "AnyKind.of.string"
+```
+
+| Function                          | Result               |
+|-----------------------------------|----------------------|
+| `ToCamelIncludePeriods(s, false)` | `AnyKindOfString`    |
+| `ToCamelIncludePeriods(s, true)`  | `anyKindOfString`    |
+
 # strcase
 [![Godoc Reference](https://godoc.org/github.com/iancoleman/strcase?status.svg)](http://godoc.org/github.com/iancoleman/strcase)
 [![Build Status](https://travis-ci.org/iancoleman/strcase.svg)](https://travis-ci.org/iancoleman/strcase)

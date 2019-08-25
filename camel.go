@@ -29,6 +29,45 @@ import (
 	"strings"
 )
 
+// abc.abc_abc -> AbcAbcAbc
+func ToCamelIncludePeriods(s string, isLowerCamel bool) string {
+	if s == "" {
+		return s
+	}
+
+	if isLowerCamel {
+		if r := rune(s[0]); r >= 'A' && r <= 'Z' {
+			s = strings.ToLower(string(r)) + s[1:]
+		}
+	}
+
+	s = addWordBoundariesToNumbers(s)
+	s = strings.Trim(s, " ")
+	n := ""
+	capNext := !isLowerCamel
+	for _, v := range s {
+		if v >= 'A' && v <= 'Z' {
+			n += string(v)
+		}
+		if v >= '0' && v <= '9' {
+			n += string(v)
+		}
+		if v >= 'a' && v <= 'z' {
+			if capNext {
+				n += strings.ToUpper(string(v))
+			} else {
+				n += string(v)
+			}
+		}
+		if v == '_' || v == ' ' || v == '-' || v == '.' {
+			capNext = true
+		} else {
+			capNext = false
+		}
+	}
+	return n
+}
+
 // Converts a string to CamelCase
 func toCamelInitCase(s string, initCase bool) string {
 	s = addWordBoundariesToNumbers(s)

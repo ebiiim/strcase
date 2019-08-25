@@ -28,6 +28,37 @@ import (
 	"testing"
 )
 
+func TestToCamelIncludePeriods(t *testing.T) {
+	cases := []struct {
+		in      string
+		isLower bool
+		out     string
+	}{
+		{"test_case", false, "TestCase"},
+		{"test", false, "Test"},
+		{"TestCase", false, "TestCase"},
+		{" test  case ", false, "TestCase"},
+		{"", false, ""},
+		{"many_many_words", false, "ManyManyWords"},
+		{"AnyKind of_string", false, "AnyKindOfString"},
+		{"odd-fix", false, "OddFix"},
+		{"numbers2And55with000", false, "Numbers2And55With000"},
+		{"foo-bar", true, "fooBar"},
+		{"TestCase", true, "testCase"},
+		{"", true, ""},
+		{"AnyKind of_string", true, "anyKindOfString"},
+		{"AnyKind.of.string", false, "AnyKindOfString"},
+		{"AnyKind.of.string", true, "anyKindOfString"},
+	}
+	for _, c := range cases {
+		c := c
+		result := ToCamelIncludePeriods(c.in, c.isLower)
+		if result != c.out {
+			t.Error("'" + result + "' != '" + c.out + "'")
+		}
+	}
+}
+
 func TestToCamel(t *testing.T) {
 	cases := [][]string{
 		{"test_case", "TestCase"},
